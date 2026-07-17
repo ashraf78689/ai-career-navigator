@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Resume - AI Career Navigator</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/upload-page.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- PDF.js library for better PDF parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <i class="fas fa-brain"></i>
+          <span>AI Career Navigator</span>
+        </div>
+        <div class="nav-menu">
+          <ul class="nav-list">
+            <li><a href="../index.html" class="nav-link">Home</a></li>
+            <li><a href="../index.html" class="nav-link">Back</a></li>
+            <!-- Dynamic auth items will be added here -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Authentication Required Modal -->
+    <div id="authRequiredModal" class="auth-modal" style="display: none">
+      <div class="auth-modal-content">
+        <div class="auth-modal-header">
+          <i class="fas fa-lock auth-icon"></i>
+          <h2>Authentication Required</h2>
+        </div>
+        <div class="auth-modal-body">
+          <p>
+            Please sign in to access the resume upload feature and get
+            personalized AI career recommendations.
+          </p>
+          <div class="auth-benefits">
+            <div class="benefit-item">
+              <i class="fas fa-upload"></i>
+              <span>Upload & Parse Resumes</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fas fa-brain"></i>
+              <span>AI Career Analysis</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fas fa-briefcase"></i>
+              <span>Personalized Job Matches</span>
+            </div>
+          </div>
+        </div>
+        <div class="auth-modal-actions">
+          <button class="btn btn-secondary" onclick="redirectToHome()">
+            <i class="fas fa-home"></i> Go Home
+          </button>
+          <button class="btn btn-primary" onclick="redirectToSignin()">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Welcome Section for Authenticated Users -->
+    <div id="welcomeSection" class="welcome-banner" style="display: none">
+      <div class="welcome-content">
+        <div class="welcome-text">
+          <h2>
+            Welcome back, <span id="userName" class="user-name">User</span>! 👋
+          </h2>
+          <p>Ready to unlock your career potential with AI-powered insights?</p>
+        </div>
+        <div class="welcome-actions">
+          <button class="btn-ghost" onclick="authSystem.logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="upload-container" id="mainContent">
+      <div class="upload-header">
+        <h1>Upload Your Resume</h1>
+        <p>Supported formats: PDF, DOC, DOCX (Max 5MB)</p>
+        <div class="upload-stats">
+          <div class="stat-item">
+            <span class="stat-number">10K+</span>
+            <span class="stat-label">Resumes Processed</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">99%</span>
+            <span class="stat-label">Accuracy Rate</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-content" id="uploadContent">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <h3>Drag & Drop your resume here</h3>
+          <p>or click to browse files</p>
+          <input type="file" id="fileInput" accept=".pdf,.doc,.docx" hidden />
+        </div>
+
+        <div class="file-preview" id="filePreview" style="display: none">
+          <div class="file-info">
+            <div class="file-icon" id="fileIcon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="file-details">
+              <h4 id="fileName"></h4>
+              <p id="fileSize"></p>
+              <div
+                class="extraction-preview"
+                id="extractionPreview"
+                style="display: none"
+              >
+                <div class="preview-item">
+                  <strong>Name:</strong>
+                  <span id="previewName">Not detected</span>
+                </div>
+                <div class="preview-item">
+                  <strong>Email:</strong>
+                  <span id="previewEmail">Not detected</span>
+                </div>
+                <div class="preview-item">
+                  <strong>Skills:</strong>
+                  <span id="previewSkills">Not detected</span>
+                </div>
+              </div>
+              <div class="file-actions">
+                <button
+                  type="button"
+                  class="change-file-btn"
+                  onclick="changeFile()"
+                >
+                  <i class="fas fa-exchange-alt"></i> Change File
+                </button>
+                <button
+                  type="button"
+                  class="preview-btn"
+                  onclick="quickPreview()"
+                  style="display: none"
+                >
+                  <i class="fas fa-eye"></i> Quick Preview
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="upload-progress" id="uploadProgress" style="display: none">
+          <div class="progress-info">
+            <h3 id="progressTitle">Processing Your Resume</h3>
+            <p id="progressDescription">Initializing AI parser...</p>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-details">
+            <span id="progressText">0%</span>
+            <span id="progressStats"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="upload-actions">
+        <button class="btn-secondary" onclick="goBack()">
+          <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <button
+          class="btn-primary"
+          id="uploadBtn"
+          disabled
+          onclick="processResume()"
+        >
+          <i class="fas fa-magic"></i> Parse Resume
+        </button>
+      </div>
+
+      <!-- Debug Panel (for development) -->
+      <div class="debug-panel" id="debugPanel" style="display: none">
+        <h4>Debug Information</h4>
+        <div class="debug-content">
+          <div>
+            <strong>File Type:</strong> <span id="debugFileType"></span>
+          </div>
+          <div>
+            <strong>File Size:</strong> <span id="debugFileSize"></span>
+          </div>
+          <div>
+            <strong>Text Length:</strong> <span id="debugTextLength"></span>
+          </div>
+          <div>
+            <strong>Extraction Status:</strong> <span id="debugStatus"></span>
+          </div>
+        </div>
+        <textarea
+          id="debugText"
+          placeholder="Extracted text will appear here..."
+          rows="6"
+        ></textarea>
+      </div>
+
+      <!-- Features Info -->
+      <div class="features-info">
+        <h3>What happens after upload?</h3>
+        <div class="features-list">
+          <div class="feature-item">
+            <i class="fas fa-search"></i>
+            <span>Advanced AI extracts all resume details</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-edit"></i>
+            <span>Review and edit extracted information</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-brain"></i>
+            <span>Get personalized career recommendations</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-briefcase"></i>
+            <span>Find matching job opportunities</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Include main auth system -->
+    <script src="../js/main.js"></script>
+    <script src="../js/resume-parser.js"></script>
+    <script src="../js/upload-page-enhanced.js"></script>
+
+    <!-- ENHANCED UPLOAD PAGE AUTHENTICATION SCRIPT -->
+    <script>
+      class UploadPageManager {
+        constructor() {
+          this.user = null;
+          this.token = null;
+          this.init();
+        }
+
+        async init() {
+          console.log("🔐 Upload Page Manager Initializing...");
+
+          // Check authentication
+          await this.checkAuthentication();
+
+          if (!this.isAuthenticated()) {
+            this.showAuthRequired();
+            return;
+          }
+
+          // User is authenticated - setup page
+          this.setupAuthenticatedPage();
+          this.initializeUploadFunctionality();
+        }
+
+        checkAuthentication() {
+          return new Promise((resolve) => {
+            this.token = localStorage.getItem("authToken");
+            const userData = localStorage.getItem("user");
+
+            if (this.token && userData) {
+              try {
+                this.user = JSON.parse(userData);
+                console.log("✅ User authenticated:", this.user.firstName);
+                resolve(true);
+              } catch (error) {
+                console.error("❌ Error parsing user data:", error);
+                this.clearAuth();
+                resolve(false);
+              }
+            } else {
+              console.log("❌ No authentication found");
+              resolve(false);
+            }
+          });
+        }
+
+        isAuthenticated() {
+          return !!(this.token && this.user);
+        }
+
+        showAuthRequired() {
+          console.log("🔒 Showing auth required modal");
+
+          // Show auth modal
+          document.getElementById("authRequiredModal").style.display = "flex";
+
+          // Blur main content
+          const mainContent = document.getElementById("mainContent");
+          if (mainContent) {
+            mainContent.style.filter = "blur(8px)";
+            mainContent.style.pointerEvents = "none";
+            mainContent.style.opacity = "0.3";
+          }
+        }
+
+        setupAuthenticatedPage() {
+          console.log(
+            "🎯 Setting up authenticated page for:",
+            this.user.firstName
+          );
+
+          // Show welcome section
+          const welcomeSection = document.getElementById("welcomeSection");
+          const userName = document.getElementById("userName");
+
+          if (welcomeSection && userName) {
+            userName.textContent = this.user.firstName;
+            welcomeSection.style.display = "block";
+          }
+
+          // Update navigation
+          this.updateNavigation();
+
+          // Show main content
+          const mainContent = document.getElementById("mainContent");
+          if (mainContent) {
+            mainContent.style.filter = "none";
+            mainContent.style.pointerEvents = "auto";
+            mainContent.style.opacity = "1";
+          }
+        }
+
+        updateNavigation() {
+          const navList = document.querySelector(".nav-list");
+          if (!navList) return;
+
+          // Remove existing auth items
+          const existingAuthItems = navList.querySelectorAll(".auth-nav-item");
+          existingAuthItems.forEach((item) => item.remove());
+
+          // Add user info and logout
+          const userItem = document.createElement("li");
+          userItem.className = "auth-nav-item";
+          userItem.innerHTML = `
+            <span class="nav-link user-info">
+              <i class="fas fa-user-circle"></i> ${this.user.firstName}
+            </span>
+          `;
+
+          const logoutItem = document.createElement("li");
+          logoutItem.className = "auth-nav-item";
+          logoutItem.innerHTML = `
+            <a href="#" class="nav-link logout-link" onclick="uploadPageManager.logout(event)">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          `;
+
+          navList.appendChild(userItem);
+          navList.appendChild(logoutItem);
+        }
+
+        initializeUploadFunctionality() {
+          console.log("📁 Initializing upload functionality");
+
+          const fileInput = document.getElementById("fileInput");
+          const uploadArea = document.getElementById("uploadArea");
+
+          // File input change handler
+          if (fileInput) {
+            fileInput.onchange = (e) => {
+              if (e.target.files.length > 0) {
+                this.handleFileSelection(e.target.files[0]);
+              }
+            };
+          }
+
+          // Make upload area clickable
+          if (uploadArea) {
+            uploadArea.onclick = () => {
+              if (
+                fileInput &&
+                !document.getElementById("filePreview").style.display !== "none"
+              ) {
+                fileInput.click();
+              }
+            };
+
+            // Drag and drop handlers
+            uploadArea.ondragover = (e) => {
+              e.preventDefault();
+              uploadArea.classList.add("drag-over");
+            };
+
+            uploadArea.ondragleave = (e) => {
+              e.preventDefault();
+              uploadArea.classList.remove("drag-over");
+            };
+
+            uploadArea.ondrop = (e) => {
+              e.preventDefault();
+              uploadArea.classList.remove("drag-over");
+
+              const files = e.dataTransfer.files;
+              if (files.length > 0) {
+                this.handleFileSelection(files[0]);
+              }
+            };
+          }
+        }
+
+        handleFileSelection(file) {
+          console.log("📄 File selected:", file.name);
+
+          // Validate file
+          if (!this.validateFile(file)) {
+            return;
+          }
+
+          // Show file preview
+          this.showFilePreview(file);
+
+          // Enable upload button
+          const uploadBtn = document.getElementById("uploadBtn");
+          if (uploadBtn) {
+            uploadBtn.disabled = false;
+          }
+        }
+
+        validateFile(file) {
+          const allowedTypes = [
+            "application/pdf",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          ];
+          const maxSize = 5 * 1024 * 1024; // 5MB
+
+          if (!allowedTypes.includes(file.type)) {
+            this.showError("Please upload a PDF, DOC, or DOCX file");
+            return false;
+          }
+
+          if (file.size > maxSize) {
+            this.showError("File size must be less than 5MB");
+            return false;
+          }
+
+          return true;
+        }
+
+        showFilePreview(file) {
+          const filePreview = document.getElementById("filePreview");
+          const fileName = document.getElementById("fileName");
+          const fileSize = document.getElementById("fileSize");
+          const uploadContent = document.getElementById("uploadContent");
+
+          if (filePreview && fileName && fileSize && uploadContent) {
+            fileName.textContent = file.name;
+            fileSize.textContent = this.formatFileSize(file.size);
+
+            uploadContent.style.display = "none";
+            filePreview.style.display = "block";
+          }
+        }
+
+        formatFileSize(bytes) {
+          if (bytes === 0) return "0 Bytes";
+          const k = 1024;
+          const sizes = ["Bytes", "KB", "MB", "GB"];
+          const i = Math.floor(Math.log(bytes) / Math.log(k));
+          return (
+            parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
+          );
+        }
+
+        async processResume() {
+          const fileInput = document.getElementById("fileInput");
+          if (!fileInput.files.length) {
+            this.showError("Please select a file first");
+            return;
+          }
+
+          const file = fileInput.files[0];
+          console.log("🚀 Processing resume:", file.name);
+
+          this.showUploadProgress();
+
+          try {
+            const formData = new FormData();
+            formData.append("resume", file);
+
+            const response = await fetch("/api/upload", {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${this.token}`,
+              },
+              body: formData,
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              console.log("✅ Upload successful");
+              this.showUploadSuccess(data);
+
+              // Redirect after delay
+              setTimeout(() => {
+                window.location.href = "/pages/extract-edit.html";
+              }, 2000);
+            } else {
+              throw new Error(data.error || "Upload failed");
+            }
+          } catch (error) {
+            console.error("❌ Upload error:", error);
+            this.showUploadError(error.message);
+          } finally {
+            this.hideUploadProgress();
+          }
+        }
+
+        showUploadProgress() {
+          const uploadProgress = document.getElementById("uploadProgress");
+          const uploadArea = document.querySelector(
+            ".upload-content, .file-preview"
+          );
+
+          if (uploadProgress) {
+            uploadProgress.style.display = "block";
+          }
+
+          // Hide other content
+          document
+            .querySelectorAll(".upload-content, .file-preview")
+            .forEach((el) => {
+              el.style.display = "none";
+            });
+        }
+
+        hideUploadProgress() {
+          const uploadProgress = document.getElementById("uploadProgress");
+          if (uploadProgress) {
+            uploadProgress.style.display = "none";
+          }
+        }
+
+        showUploadSuccess(data) {
+          this.showMessage(
+            `✅ ${data.originalName} uploaded successfully!`,
+            "success"
+          );
+        }
+
+        showUploadError(message) {
+          this.showMessage(`❌ Upload failed: ${message}`, "error");
+        }
+
+        showError(message) {
+          this.showMessage(message, "error");
+        }
+
+        showMessage(message, type = "info") {
+          // Remove existing messages
+          document
+            .querySelectorAll(".upload-message")
+            .forEach((msg) => msg.remove());
+
+          const messageDiv = document.createElement("div");
+          messageDiv.className = `upload-message upload-message-${type}`;
+          messageDiv.style.cssText = `
+            position: fixed; top: 20px; right: 20px; padding: 1rem 1.5rem;
+            border-radius: 0.5rem; color: white; font-weight: 500; z-index: 10003;
+            max-width: 400px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            background: ${
+              type === "error"
+                ? "#ef4444"
+                : type === "success"
+                ? "#22c55e"
+                : "#3b82f6"
+            };
+            animation: slideInFromRight 0.3s ease;
+          `;
+
+          messageDiv.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-${
+                type === "error"
+                  ? "exclamation-circle"
+                  : type === "success"
+                  ? "check-circle"
+                  : "info-circle"
+              }"></i>
+              <span>${message}</span>
+            </div>
+          `;
+
+          document.body.appendChild(messageDiv);
+          setTimeout(() => messageDiv?.remove(), 5000);
+        }
+
+        logout(event) {
+          if (event) event.preventDefault();
+
+          console.log("👋 Logging out...");
+          this.clearAuth();
+          this.showMessage("Logged out successfully", "success");
+
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 1500);
+        }
+
+        clearAuth() {
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("user");
+          this.token = null;
+          this.user = null;
+        }
+      }
+
+      // Global functions for modal
+      function redirectToSignin() {
+        window.location.href = "/?auth=signin";
+      }
+
+      function redirectToHome() {
+        window.location.href = "/";
+      }
+
+      // Enhanced global functions
+      function changeFile() {
+        const fileInput = document.getElementById("fileInput");
+        if (fileInput) {
+          fileInput.click();
+        }
+      }
+
+      function processResume() {
+        if (window.uploadPageManager) {
+          window.uploadPageManager.processResume();
+        }
+      }
+
+      function goBack() {
+        window.location.href = "../index.html";
+      }
+
+      // Initialize upload page manager
+      let uploadPageManager;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("📄 Upload page DOM loaded");
+        uploadPageManager = new UploadPageManager();
+        window.uploadPageManager = uploadPageManager;
+      });
+    </script>
+
+    <!-- Keep your existing chatbot and other scripts -->
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget" id="chatbotWidget">
+      <div class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
+        <i class="fas fa-comments"></i>
+        <span
+          class="notification-badge"
+          id="chatNotification"
+          style="display: none"
+          >1</span
+        >
+      </div>
+
+      <div
+        class="chatbot-container"
+        id="chatbotContainer"
+        style="display: none"
+      >
+        <div class="chatbot-header">
+          <div class="chatbot-title">
+            <i class="fas fa-robot"></i>
+            <span>AI Career Assistant</span>
+          </div>
+          <div class="chatbot-controls">
+            <button class="minimize-btn" onclick="minimizeChatbot()">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button class="close-btn" onclick="closeChatbot()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="chatbot-messages" id="chatbotMessages">
+          <div class="message bot-message">
+            <div class="message-avatar">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+              <p>
+                👋 Hello! I'm your AI Career Assistant. I can help you with
+                questions about career guidance, resume tips, job
+                recommendations, and more!
+              </p>
+              <div class="quick-actions">
+                <button
+                  class="quick-action"
+                  onclick="sendQuickMessage('What is AI Career Navigator?')"
+                >
+                  About Platform
+                </button>
+                <button
+                  class="quick-action"
+                  onclick="sendQuickMessage('How does the AI work?')"
+                >
+                  How It Works
+                </button>
+                <button
+                  class="quick-action"
+                  onclick="sendQuickMessage('What careers can you recommend?')"
+                >
+                  Career Options
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chatbot-input">
+          <div
+            class="typing-indicator"
+            id="typingIndicator"
+            style="display: none"
+          >
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>AI is typing...</span>
+          </div>
+          <div class="input-container">
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="Ask me anything about your career..."
+              onkeypress="handleChatKeyPress(event)"
+            />
+            <button id="sendBtn" onclick="sendMessage()">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="chatbot-suggestions" id="chatSuggestions">
+          <div class="suggestions-title">Popular Questions:</div>
+          <div class="suggestion-chips">
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('What skills does AI detect?')"
+            >
+              Skill Detection
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('Is my data safe?')"
+            >
+              Data Safety
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('Free learning platforms?')"
+            >
+              Free Courses
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('High paying AI jobs?')"
+            >
+              Salary Info
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Your existing chatbot script -->
+    <script>
+      // ... (keep all your existing chatbot JavaScript)
+      // Inline chatbot script to avoid file path issues
+      class CareerChatbot {
+        constructor() {
+          this.isOpen = false;
+          this.isMinimized = false;
+          this.messageHistory = [];
+
+          // Initialize knowledge base
+          this.knowledgeBase = {
+            // General Questions
+            "what is ai career navigator": {
+              answer:
+                "AI Career Navigator is an AI-powered tool that guides students and professionals in choosing the right career path based on their skills, interests, and academic background. It provides personalized career recommendations, skill gap analysis, and job matching.",
+              category: "general",
+            },
+            "how does ai career navigator work": {
+              answer:
+                "The system takes your resume and preferences, analyzes your skills using advanced AI algorithms, matches them with current market demand, and recommends the best career paths. It also provides skill development suggestions and job opportunities.",
+              category: "general",
+            },
+            "who can use ai career navigator": {
+              answer:
+                "Students, fresh graduates, and professionals looking to switch careers can all use AI Career Navigator. Whether you're just starting out or looking to advance your career, our platform adapts to your experience level.",
+              category: "general",
+            },
+
+            // Resume & Skills
+            "why upload resume": {
+              answer:
+                "Uploading your resume helps the AI extract your academic background, skills, work experience, and achievements to provide highly personalized career suggestions. The more information we have, the better our recommendations!",
+              category: "resume",
+            },
+            "use without resume": {
+              answer:
+                "Yes, absolutely! You can manually input your skills, interests, educational background, and career preferences instead of uploading a resume. The platform is flexible to accommodate different user preferences.",
+              category: "resume",
+            },
+            "what skills detected": {
+              answer:
+                "The AI detects both technical skills (Python, Java, Data Analysis, Web Development, Machine Learning, etc.) and soft skills (communication, teamwork, leadership, problem-solving, etc.). It can identify over 500+ different skills from various domains.",
+              category: "skills",
+            },
+
+            // Career Suggestions
+            "what careers recommended": {
+              answer:
+                "I can recommend careers like Data Scientist, AI Engineer, Software Developer, Web Developer, Cloud Engineer, Cybersecurity Specialist, Business Analyst, Digital Marketer, UI/UX Designer, Product Manager, DevOps Engineer, and many more across different industries.",
+              category: "careers",
+            },
+            "how ai choose career": {
+              answer:
+                "The AI analyzes your skills, interests, educational background, and career goals, then compares them with industry requirements and job market trends. It uses machine learning algorithms to suggest careers that best match your profile with confidence scores.",
+              category: "careers",
+            },
+            "multiple career options": {
+              answer:
+                "Yes! The AI generates a ranked list of suitable careers along with confidence scores, growth potential, and salary information. You'll typically get 5-10 personalized career recommendations to choose from.",
+              category: "careers",
+            },
+
+            // Education & Courses
+            "suggest courses": {
+              answer:
+                "Yes, the AI recommends online courses, certifications, and training programs based on your chosen career path. It provides specific course recommendations to fill skill gaps and boost your career prospects.",
+              category: "education",
+            },
+            "free learning platforms": {
+              answer:
+                "Absolutely! The AI recommends free platforms like Coursera (audit mode), edX, Khan Academy, freeCodeCamp, YouTube tutorials, GitHub learning resources, and many university open courseware programs.",
+              category: "education",
+            },
+            "degree suggestions": {
+              answer:
+                "Yes, based on your career goals (e.g., Data Science, Cybersecurity, AI), the system suggests relevant degrees, specializations, or alternative learning paths including bootcamps and certification programs.",
+              category: "education",
+            },
+
+            // Job Market
+            "job demand": {
+              answer:
+                "Yes, the AI provides real-time job market trends, showing demand levels, growth projections, and hiring patterns in your chosen field. It helps you understand which careers are currently in high demand.",
+              category: "jobs",
+            },
+            "salary information": {
+              answer:
+                "Yes, the platform provides average salary ranges for different roles based on location, experience level, company size, and industry. This helps you set realistic salary expectations.",
+              category: "jobs",
+            },
+            "future proof careers": {
+              answer:
+                "The AI highlights high-growth, future-proof fields like AI/Machine Learning, Cybersecurity, Cloud Computing, Data Science, Digital Health, Renewable Energy, and emerging technologies that are expected to grow significantly.",
+              category: "jobs",
+            },
+
+            // Personalization
+            "set preferences": {
+              answer:
+                "Yes! You can set preferences such as salary range, work-life balance, job flexibility, industry type, company size, location preferences, and career growth expectations. The AI tailors recommendations accordingly.",
+              category: "personalization",
+            },
+            "internship guidance": {
+              answer:
+                "Yes, the AI suggests relevant internship roles based on your current skills and career goals. It helps you find internships that will provide valuable experience and improve your job prospects.",
+              category: "personalization",
+            },
+            "resume improvement": {
+              answer:
+                "Yes! The AI provides personalized resume-building tips, highlights missing skills compared to your target career, suggests improvements in formatting, and recommends additional experiences to strengthen your profile.",
+              category: "personalization",
+            },
+
+            // Technical Questions
+            "need coding knowledge": {
+              answer:
+                "No coding knowledge required! The platform is designed to be user-friendly. Simply upload your resume or manually input your skills and preferences, and the AI will handle the rest.",
+              category: "technical",
+            },
+            "data safety": {
+              answer:
+                "Yes, your data is completely safe. All information is encrypted using industry-standard security protocols. We never share your personal data with third parties and you can delete your data anytime.",
+              category: "technical",
+            },
+            "mobile access": {
+              answer:
+                "Yes, the AI Career Navigator works seamlessly on both mobile devices and desktop browsers. The interface is fully responsive and optimized for all screen sizes.",
+              category: "technical",
+            },
+
+            // Specific Career Advice
+            "python excel career": {
+              answer:
+                "Based on Python and Excel skills, excellent career options include Data Analyst, Business Analyst, Junior Data Scientist, Financial Analyst, Operations Analyst, or Market Research Analyst. These roles highly value your current skillset!",
+              category: "advice",
+            },
+            "high paying ai jobs": {
+              answer:
+                "For high-paying AI careers, focus on Machine Learning Engineer, AI Research Scientist, Deep Learning Engineer, or AI Product Manager roles. Develop skills in TensorFlow, PyTorch, cloud platforms, and get certifications. Salaries typically range from $120k-$300k+.",
+              category: "advice",
+            },
+            "design technology career": {
+              answer:
+                "Perfect combination! You can explore UI/UX Design, Human-Computer Interaction, Frontend Development, Design Systems Engineering, or Creative Technology roles. These careers blend creativity with technical skills beautifully.",
+              category: "advice",
+            },
+          };
+
+          this.initialize();
+        }
+
+        initialize() {
+          console.log("Chatbot initializing...");
+          // Show notification badge after 3 seconds
+          setTimeout(() => {
+            this.showNotification();
+          }, 3000);
+        }
+
+        showNotification() {
+          const badge = document.getElementById("chatNotification");
+          if (badge) {
+            badge.style.display = "block";
+            console.log("Notification badge shown");
+          }
+        }
+
+        hideNotification() {
+          const badge = document.getElementById("chatNotification");
+          if (badge) {
+            badge.style.display = "none";
+          }
+        }
+
+        findBestMatch(userInput) {
+          const input = userInput.toLowerCase().trim();
+
+          // Direct keyword matching
+          for (const [key, value] of Object.entries(this.knowledgeBase)) {
+            if (input.includes(key) || key.includes(input)) {
+              return value;
+            }
+          }
+
+          // Fuzzy matching for common variations
+          const fuzzyMatches = {
+            "how it works": "how does ai career navigator work",
+            careers: "what careers recommended",
+            jobs: "what careers recommended",
+            salary: "salary information",
+            money: "salary information",
+            safe: "data safety",
+            security: "data safety",
+            mobile: "mobile access",
+            phone: "mobile access",
+            courses: "suggest courses",
+            learn: "suggest courses",
+            study: "suggest courses",
+            free: "free learning platforms",
+            resume: "why upload resume",
+            cv: "why upload resume",
+            skills: "what skills detected",
+            python: "python excel career",
+            design: "design technology career",
+            "ai job": "high paying ai jobs",
+            "machine learning": "high paying ai jobs",
+          };
+
+          for (const [pattern, key] of Object.entries(fuzzyMatches)) {
+            if (input.includes(pattern)) {
+              return this.knowledgeBase[key];
+            }
+          }
+
+          return null;
+        }
+
+        generateResponse(userInput) {
+          const match = this.findBestMatch(userInput);
+
+          if (match) {
+            return {
+              text: match.answer,
+              category: match.category,
+              suggestions: this.getSuggestions(match.category),
+            };
+          } else {
+            return {
+              text: "I understand you're looking for career guidance! While I don't have a specific answer to that question, I can help you with career recommendations, skill analysis, job market insights, and learning paths. Could you try asking about a specific career field or skill?",
+              category: "general",
+              suggestions: [
+                "What careers can you recommend?",
+                "How does the AI work?",
+                "Is my data safe?",
+                "What skills can you detect?",
+              ],
+            };
+          }
+        }
+
+        getSuggestions(category) {
+          const suggestionMap = {
+            general: [
+              "How does the AI work?",
+              "Who can use this platform?",
+              "What careers can you recommend?",
+            ],
+            careers: [
+              "What skills should I learn?",
+              "High paying career options?",
+              "Future-proof careers?",
+            ],
+            skills: [
+              "Free learning platforms?",
+              "Course recommendations?",
+              "Resume improvement tips?",
+            ],
+            jobs: [
+              "Salary information?",
+              "Job market trends?",
+              "Internship opportunities?",
+            ],
+            education: [
+              "Degree suggestions?",
+              "Free courses available?",
+              "Certification programs?",
+            ],
+          };
+
+          return suggestionMap[category] || suggestionMap.general;
+        }
+
+        addMessage(content, isUser = false) {
+          const messagesContainer = document.getElementById("chatbotMessages");
+          const messageDiv = document.createElement("div");
+          messageDiv.className = `message ${
+            isUser ? "user-message" : "bot-message"
+          }`;
+
+          messageDiv.innerHTML = `
+            <div class="message-avatar">
+                <i class="fas fa-${isUser ? "user" : "robot"}"></i>
+            </div>
+            <div class="message-content">
+                <p>${content}</p>
+            </div>
+        `;
+
+          messagesContainer.appendChild(messageDiv);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+          // Store message in history
+          this.messageHistory.push({
+            content,
+            isUser,
+            timestamp: new Date(),
+          });
+        }
+
+        addMessageWithSuggestions(response) {
+          const messagesContainer = document.getElementById("chatbotMessages");
+          const messageDiv = document.createElement("div");
+          messageDiv.className = "message bot-message";
+
+          let suggestionsHTML = "";
+          if (response.suggestions && response.suggestions.length > 0) {
+            suggestionsHTML = `
+                <div class="quick-actions">
+                    ${response.suggestions
+                      .map(
+                        (suggestion) =>
+                          `<button class="quick-action" onclick="sendQuickMessage('${suggestion}')">${suggestion}</button>`
+                      )
+                      .join("")}
+                </div>
+            `;
+          }
+
+          messageDiv.innerHTML = `
+            <div class="message-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+                <p>${response.text}</p>
+                ${suggestionsHTML}
+            </div>
+        `;
+
+          messagesContainer.appendChild(messageDiv);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        showTypingIndicator() {
+          const indicator = document.getElementById("typingIndicator");
+          if (indicator) {
+            indicator.style.display = "flex";
+          }
+        }
+
+        hideTypingIndicator() {
+          const indicator = document.getElementById("typingIndicator");
+          if (indicator) {
+            indicator.style.display = "none";
+          }
+        }
+
+        async processMessage(userInput) {
+          if (!userInput.trim()) return;
+
+          // Add user message
+          this.addMessage(userInput, true);
+
+          // Show typing indicator
+          this.showTypingIndicator();
+
+          // Simulate processing time
+          await new Promise((resolve) =>
+            setTimeout(resolve, 1000 + Math.random() * 1000)
+          );
+
+          // Hide typing indicator
+          this.hideTypingIndicator();
+
+          // Generate and add bot response
+          const response = this.generateResponse(userInput);
+          this.addMessageWithSuggestions(response);
+
+          // Update suggestions
+          this.updateSuggestions(response.suggestions);
+        }
+
+        updateSuggestions(suggestions) {
+          const suggestionsContainer =
+            document.querySelector(".suggestion-chips");
+          if (suggestionsContainer && suggestions) {
+            suggestionsContainer.innerHTML = suggestions
+              .map(
+                (suggestion) =>
+                  `<button class="suggestion-chip" onclick="sendQuickMessage('${suggestion}')">${suggestion}</button>`
+              )
+              .join("");
+          }
+        }
+      }
+
+      // Global chatbot instance
+      let careerChatbot;
+
+      // Initialize chatbot when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM loaded, initializing chatbot...");
+        careerChatbot = new CareerChatbot();
+      });
+
+      // Chatbot control functions
+      function toggleChatbot() {
+        console.log("Toggle chatbot clicked");
+        const container = document.getElementById("chatbotContainer");
+        const widget = document.getElementById("chatbotWidget");
+
+        if (container.style.display === "none") {
+          container.style.display = "block";
+          careerChatbot.isOpen = true;
+          careerChatbot.hideNotification();
+
+          // Focus input
+          setTimeout(() => {
+            const input = document.getElementById("chatInput");
+            if (input) input.focus();
+          }, 100);
+        } else {
+          container.style.display = "none";
+          careerChatbot.isOpen = false;
+        }
+      }
+
+      function minimizeChatbot() {
+        const container = document.getElementById("chatbotContainer");
+        container.style.display = "none";
+        careerChatbot.isOpen = false;
+        careerChatbot.isMinimized = true;
+      }
+
+      function closeChatbot() {
+        const container = document.getElementById("chatbotContainer");
+        container.style.display = "none";
+        careerChatbot.isOpen = false;
+      }
+
+      function sendMessage() {
+        const input = document.getElementById("chatInput");
+        const message = input.value.trim();
+
+        if (message && careerChatbot) {
+          careerChatbot.processMessage(message);
+          input.value = "";
+        }
+      }
+
+      function sendQuickMessage(message) {
+        const input = document.getElementById("chatInput");
+        if (input) {
+          input.value = message;
+          sendMessage();
+        }
+      }
+
+      function handleChatKeyPress(event) {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      }
+    </script>
+
+    <!-- Keep your existing chatbot styles -->
+    <style>
+      /* Enhanced Authentication Styles */
+      .auth-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        backdrop-filter: blur(10px);
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .auth-modal-content {
+        background: #16213e;
+        border-radius: 1rem;
+        padding: 0;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        animation: slideInUp 0.4s ease;
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .auth-modal-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .auth-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.9;
+      }
+
+      .auth-modal-header h2 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+
+      .auth-modal-body {
+        padding: 2rem;
+        color: white;
+        text-align: center;
+      }
+
+      .auth-modal-body p {
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #cbd5e1;
+      }
+
+      .auth-benefits {
+        display: grid;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .benefit-item i {
+        color: #22c55e;
+        font-size: 1.2rem;
+        width: 24px;
+      }
+
+      .auth-modal-actions {
+        padding: 2rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: #667eea;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #5a67d8;
+        transform: translateY(-2px);
+      }
+
+      .btn-secondary {
+        background: #6b7280;
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background: #4b5563;
+        transform: translateY(-2px);
+      }
+
+      /* Welcome Banner Styles */
+      .welcome-banner {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem 0;
+        margin-bottom: 2rem;
+      }
+
+      .welcome-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .welcome-text h2 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.8rem;
+      }
+
+      .user-name {
+        color: #fbbf24;
+        font-weight: 700;
+      }
+
+      .welcome-text p {
+        margin: 0;
+        opacity: 0.9;
+        font-size: 1rem;
+      }
+
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      /* Navigation Updates */
+      .user-info {
+        color: #22c55e !important;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        background: rgba(34, 197, 94, 0.1);
+        border-radius: 0.5rem;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+      }
+
+      .logout-link:hover {
+        color: #ef4444 !important;
+      }
+
+      /* Upload Area Enhancements */
+      .upload-area.drag-over {
+        border-color: #667eea;
+        background: rgba(102, 126, 234, 0.1);
+        transform: scale(1.02);
+      }
+
+      /* Animation for messages */
+      @keyframes slideInFromRight {
+        from {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* Keep all your existing chatbot styles */
+      .chatbot-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 10000;
+        font-family: "Inter", sans-serif;
+      }
+
+      .chatbot-toggle {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        animation: pulse-glow 2s infinite;
+      }
+
+      .chatbot-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      .chatbot-toggle i {
+        font-size: 24px;
+        color: white;
+      }
+
+      .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ef4444;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 600;
+        animation: bounce 1s infinite;
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 30px rgba(99, 102, 241, 0.8);
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-5px);
+        }
+        60% {
+          transform: translateY(-3px);
+        }
+      }
+
+      .chatbot-container {
+        width: 380px;
+        height: 500px;
+        background: #16213e;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        overflow: hidden;
+        backdrop-filter: blur(20px);
+        animation: slideInUp 0.3s ease-out;
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .chatbot-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .chatbot-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .chatbot-title i {
+        font-size: 18px;
+      }
+
+      .chatbot-controls {
+        display: flex;
+        gap: 4px;
+      }
+
+      .minimize-btn,
+      .close-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .minimize-btn:hover,
+      .close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .chatbot-messages {
+        height: 320px;
+        overflow-y: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        scroll-behavior: smooth;
+      }
+
+      .chatbot-messages::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .chatbot-messages::-webkit-scrollbar-track {
+        background: #1e293b;
+        border-radius: 3px;
+      }
+
+      .chatbot-messages::-webkit-scrollbar-thumb {
+        background: #3b82f6;
+        border-radius: 3px;
+      }
+
+      .message {
+        display: flex;
+        gap: 8px;
+        max-width: 85%;
+        animation: messageSlideIn 0.3s ease-out;
+      }
+
+      @keyframes messageSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .user-message {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+      }
+
+      .message-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .bot-message .message-avatar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .user-message .message-avatar {
+        background: #22c55e;
+        color: white;
+      }
+
+      .message-content {
+        background: #1e293b;
+        padding: 16px;
+        border-radius: 12px;
+        flex: 1;
+      }
+
+      .user-message .message-content {
+        background: #3b82f6;
+        color: white;
+        text-align: right;
+      }
+
+      .message-content p {
+        margin: 0;
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .user-message .message-content p {
+        color: white;
+      }
+
+      .quick-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 8px;
+      }
+
+      .quick-action {
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        color: #3b82f6;
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .quick-action:hover {
+        background: #3b82f6;
+        color: white;
+      }
+
+      .typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        color: #94a3b8;
+        font-size: 12px;
+      }
+
+      .typing-dots {
+        display: flex;
+        gap: 2px;
+      }
+
+      .typing-dots span {
+        width: 4px;
+        height: 4px;
+        background: #3b82f6;
+        border-radius: 50%;
+        animation: typing 1.4s infinite ease-in-out;
+      }
+
+      .typing-dots span:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .typing-dots span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dots span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes typing {
+        0%,
+        80%,
+        100% {
+          opacity: 0.3;
+          transform: scale(1);
+        }
+        40% {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+      }
+
+      .chatbot-input {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 16px;
+      }
+
+      .input-container {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .input-container input {
+        flex: 1;
+        background: #1e293b;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 16px;
+        color: #ffffff;
+        font-size: 14px;
+      }
+
+      .input-container input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+      }
+
+      .input-container button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .input-container button:hover {
+        transform: scale(1.1);
+      }
+
+      .chatbot-suggestions {
+        padding: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        max-height: 80px;
+        overflow: hidden;
+      }
+
+      .suggestions-title {
+        color: #94a3b8;
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      .suggestion-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .suggestion-chip {
+        background: #334155;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #cbd5e1;
+        padding: 4px 8px;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .suggestion-chip:hover {
+        background: #3b82f6;
+        color: white;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .chatbot-container {
+          width: 350px;
+          height: 450px;
+        }
+
+        .chatbot-messages {
+          height: 270px;
+        }
+
+        .welcome-content {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .auth-modal-content {
+          width: 95%;
+          margin: 1rem;
+        }
+
+        .auth-modal-actions {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .chatbot-container {
+          width: calc(100vw - 40px);
+          height: 400px;
+          right: -10px;
+        }
+
+        .chatbot-messages {
+          height: 220px;
+        }
+      }
+    </style>
+  </body>
+</html>

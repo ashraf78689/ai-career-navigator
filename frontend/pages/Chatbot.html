@@ -1,0 +1,114 @@
+<!-- Chatbot Widget -->
+<div class="chatbot-widget" id="chatbotWidget">
+  <div class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
+    <i class="fas fa-comments"></i>
+    <span class="notification-badge" id="chatNotification" style="display: none"
+      >1</span
+    >
+  </div>
+
+  <div class="chatbot-container" id="chatbotContainer" style="display: none">
+    <div class="chatbot-header">
+      <div class="chatbot-title">
+        <i class="fas fa-robot"></i>
+        <span>AI Career Assistant</span>
+      </div>
+      <div class="chatbot-controls">
+        <button class="minimize-btn" onclick="minimizeChatbot()">
+          <i class="fas fa-minus"></i>
+        </button>
+        <button class="close-btn" onclick="closeChatbot()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="message bot-message">
+        <div class="message-avatar">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="message-content">
+          <p>
+            👋 Hello! I'm your AI Career Assistant. I can help you with
+            questions about career guidance, resume tips, job recommendations,
+            and more!
+          </p>
+          <div class="quick-actions">
+            <button
+              class="quick-action"
+              onclick="sendQuickMessage('What is AI Career Navigator?')"
+            >
+              About Platform
+            </button>
+            <button
+              class="quick-action"
+              onclick="sendQuickMessage('How does the AI work?')"
+            >
+              How It Works
+            </button>
+            <button
+              class="quick-action"
+              onclick="sendQuickMessage('What careers can you recommend?')"
+            >
+              Career Options
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chatbot-input">
+      <div class="typing-indicator" id="typingIndicator" style="display: none">
+        <div class="typing-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span>AI is typing...</span>
+      </div>
+      <div class="input-container">
+        <input
+          type="text"
+          id="chatInput"
+          placeholder="Ask me anything about your career..."
+          onkeypress="handleChatKeyPress(event)"
+        />
+        <button id="sendBtn" onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="chatbot-suggestions" id="chatSuggestions">
+      <div class="suggestions-title">Popular Questions:</div>
+      <div class="suggestion-chips">
+        <button
+          class="suggestion-chip"
+          onclick="sendQuickMessage('What skills does AI detect?')"
+        >
+          Skill Detection
+        </button>
+        <button
+          class="suggestion-chip"
+          onclick="sendQuickMessage('Is my data safe?')"
+        >
+          Data Safety
+        </button>
+        <button
+          class="suggestion-chip"
+          onclick="sendQuickMessage('Free learning platforms?')"
+        >
+          Free Courses
+        </button>
+        <button
+          class="suggestion-chip"
+          onclick="sendQuickMessage('High paying AI jobs?')"
+        >
+          Salary Info
+          <script src="../js/chatbot.js"></script>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

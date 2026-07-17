@@ -1,0 +1,2598 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Career Navigator - Smart Career Guidance Platform</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <i class="fas fa-brain"></i>
+          <span>AI Career Navigator</span>
+        </div>
+        <div class="nav-menu" id="navMenu">
+          <ul class="nav-list">
+            <li><a href="#home" class="nav-link">Home</a></li>
+            <li><a href="#features" class="nav-link">Features</a></li>
+            <li><a href="#how-it-works" class="nav-link">How it Works</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li>
+              <a href="#" class="nav-link" onclick="showAuth('login')"
+                >Sign In</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link signup-btn"
+                onclick="showAuth('signup')"
+                >Sign Up</a
+              >
+            </li>
+          </ul>
+          <div class="nav-toggle" id="navToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-background">
+        <div class="floating-shapes">
+          <div class="shape shape-1"></div>
+          <div class="shape shape-2"></div>
+          <div class="shape shape-3"></div>
+          <div class="shape shape-4"></div>
+        </div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            Navigate Your Career with
+            <span class="gradient-text">AI Intelligence</span>
+          </h1>
+          <p class="hero-subtitle">
+            Transform your career journey with our advanced AI-powered platform.
+            Upload your resume, get personalized insights, discover skill gaps,
+            and find your perfect job match.
+          </p>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number">10K+</span>
+              <span class="stat-label">Resumes Analyzed</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">5K+</span>
+              <span class="stat-label">Job Matches</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">95%</span>
+              <span class="stat-label">Success Rate</span>
+            </div>
+          </div>
+          <div class="hero-buttons">
+            <button class="cta-button primary" onclick="navigateToUpload()">
+              <i class="fas fa-upload"></i>
+              Upload Resume & Start
+            </button>
+            <button
+              class="cta-button secondary"
+              onclick="scrollToSection('how-it-works')"
+            >
+              <i class="fas fa-play-circle"></i>
+              See How it Works
+            </button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="dashboard-preview">
+            <div class="preview-header">
+              <div class="preview-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <div class="preview-content">
+              <div class="preview-card">
+                <i class="fas fa-chart-line"></i>
+                <h4>Skills Analysis</h4>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 85%"></div>
+                </div>
+              </div>
+              <div class="preview-card">
+                <i class="fas fa-briefcase"></i>
+                <h4>Job Matching</h4>
+                <div class="match-score">92% Match</div>
+              </div>
+              <div class="preview-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h4>Learning Path</h4>
+                <div class="learning-steps">
+                  <span class="step active"></span>
+                  <span class="step active"></span>
+                  <span class="step"></span>
+                  <span class="step"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">
+            Powerful Features for Your Career Growth
+          </h2>
+          <p class="section-subtitle">
+            Everything you need to accelerate your career in one intelligent
+            platform
+          </p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <h3 class="feature-title">Smart Resume Analysis</h3>
+            <p class="feature-description">
+              Advanced AI parsing extracts key information from your resume
+              including skills, experience, education, and achievements.
+            </p>
+            <div class="feature-highlights">
+              <span class="highlight">PDF & Word Support</span>
+              <span class="highlight">99% Accuracy</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-search"></i>
+            </div>
+            <h3 class="feature-title">Intelligent Job Matching</h3>
+            <p class="feature-description">
+              Our AI algorithm matches your skills and preferences with
+              thousands of job opportunities from top companies.
+            </p>
+            <div class="feature-highlights">
+              <span class="highlight">Real-time Updates</span>
+              <span class="highlight">Personalized Results</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-chart-bar"></i>
+            </div>
+            <h3 class="feature-title">Skills Gap Analysis</h3>
+            <p class="feature-description">
+              Identify missing skills for your target role and get personalized
+              recommendations for skill development.
+            </p>
+            <div class="feature-highlights">
+              <span class="highlight">Visual Reports</span>
+              <span class="highlight">Learning Paths</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3 class="feature-title">Location-based Search</h3>
+            <p class="feature-description">
+              Find job opportunities near you with our interactive map showing
+              salary ranges and company ratings.
+            </p>
+            <div class="feature-highlights">
+              <span class="highlight">Interactive Maps</span>
+              <span class="highlight">Salary Insights</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3 class="feature-title">Career Path Planning</h3>
+            <p class="feature-description">
+              Get AI-powered career recommendations based on your background,
+              skills, and market trends.
+            </p>
+            <div class="feature-highlights">
+              <span class="highlight">Future Trends</span>
+              <span class="highlight">Growth Predictions</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <h3 class="feature-title">Performance Tracking</h3>
+            <p class="feature-description">
+              Monitor your career progress, track application status, and
+              measure skill development over time.
+            </p>
+            <div class="feature-highlights">
+              <span class="highlight">Progress Analytics</span>
+              <span class="highlight">Goal Setting</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">How AI Career Navigator Works</h2>
+          <p class="section-subtitle">
+            Simple 4-step process to transform your career journey
+          </p>
+        </div>
+        <div class="steps-container">
+          <div class="step-item">
+            <div class="step-number">01</div>
+            <div class="step-content">
+              <div class="step-icon">
+                <i class="fas fa-upload"></i>
+              </div>
+              <h3 class="step-title">Upload Your Resume</h3>
+              <p class="step-description">
+                Simply drag and drop your resume (PDF or Word format). Our AI
+                will instantly parse and extract all relevant information.
+              </p>
+              <div class="step-features">
+                <span><i class="fas fa-check"></i> Instant parsing</span>
+                <span><i class="fas fa-check"></i> Multiple formats</span>
+                <span><i class="fas fa-check"></i> Secure processing</span>
+              </div>
+            </div>
+            <div class="step-visual">
+              <div class="upload-demo">
+                <i class="fas fa-file-pdf"></i>
+                <div class="upload-arrow">
+                  <i class="fas fa-arrow-up"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item reverse">
+            <div class="step-number">02</div>
+            <div class="step-content">
+              <div class="step-icon">
+                <i class="fas fa-edit"></i>
+              </div>
+              <h3 class="step-title">Review & Edit Details</h3>
+              <p class="step-description">
+                Verify extracted information and add any missing details. Edit
+                your skills, experience, and career preferences.
+              </p>
+              <div class="step-features">
+                <span><i class="fas fa-check"></i> Smart extraction</span>
+                <span><i class="fas fa-check"></i> Easy editing</span>
+                <span><i class="fas fa-check"></i> Auto-suggestions</span>
+              </div>
+            </div>
+            <div class="step-visual">
+              <div class="edit-demo">
+                <div class="form-field">
+                  <label>Skills</label>
+                  <div class="skills-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">AI/ML</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">03</div>
+            <div class="step-content">
+              <div class="step-icon">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h3 class="step-title">AI Analysis & Insights</h3>
+              <p class="step-description">
+                Our AI analyzes your profile and generates personalized
+                insights, skill gap analysis, and career recommendations.
+              </p>
+              <div class="step-features">
+                <span><i class="fas fa-check"></i> AI-powered analysis</span>
+                <span
+                  ><i class="fas fa-check"></i> Skill gap identification</span
+                >
+                <span><i class="fas fa-check"></i> Career suggestions</span>
+              </div>
+            </div>
+            <div class="step-visual">
+              <div class="analysis-demo">
+                <div class="analysis-chart">
+                  <div class="chart-bar" style="height: 80%"></div>
+                  <div class="chart-bar" style="height: 60%"></div>
+                  <div class="chart-bar" style="height: 90%"></div>
+                  <div class="chart-bar" style="height: 40%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item reverse">
+            <div class="step-number">04</div>
+            <div class="step-content">
+              <div class="step-icon">
+                <i class="fas fa-briefcase"></i>
+              </div>
+              <h3 class="step-title">Get Job Recommendations</h3>
+              <p class="step-description">
+                Receive personalized job recommendations, explore opportunities
+                on the map, and track your applications.
+              </p>
+              <div class="step-features">
+                <span><i class="fas fa-check"></i> Personalized matches</span>
+                <span><i class="fas fa-check"></i> Location mapping</span>
+                <span><i class="fas fa-check"></i> Application tracking</span>
+              </div>
+            </div>
+            <div class="step-visual">
+              <div class="jobs-demo">
+                <div class="job-card-demo">
+                  <h4>AI Engineer</h4>
+                  <p>Google • San Francisco</p>
+                  <div class="match-percentage">95% Match</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-text">
+            <h2 class="section-title">About AI Career Navigator</h2>
+            <p class="about-description">
+              We're on a mission to democratize career guidance through
+              artificial intelligence. Our platform combines cutting-edge AI
+              technology with deep industry insights to help professionals at
+              every stage of their career journey.
+            </p>
+            <div class="about-stats">
+              <div class="about-stat">
+                <h3>50K+</h3>
+                <p>Users Worldwide</p>
+              </div>
+              <div class="about-stat">
+                <h3>500K+</h3>
+                <p>Job Listings</p>
+              </div>
+              <div class="about-stat">
+                <h3>95%</h3>
+                <p>User Satisfaction</p>
+              </div>
+              <div class="about-stat">
+                <h3>24/7</h3>
+                <p>AI Support</p>
+              </div>
+            </div>
+          </div>
+          <div class="about-image">
+            <div class="about-card">
+              <i class="fas fa-users"></i>
+              <h4>Expert Team</h4>
+              <p>AI researchers, career experts, and industry professionals</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2 class="cta-title">Ready to Transform Your Career?</h2>
+          <p class="cta-description">
+            Join thousands of professionals who have already discovered their
+            dream careers with AI Career Navigator.
+          </p>
+          <button class="cta-button primary large" onclick="navigateToUpload()">
+            <i class="fas fa-rocket"></i>
+            Start Your Journey Now
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <i class="fas fa-brain"></i>
+              <span>AI Career Navigator</span>
+            </div>
+            <p class="footer-description">
+              Empowering careers through artificial intelligence
+            </p>
+          </div>
+          <div class="footer-links">
+            <div class="footer-column">
+              <h4>Product</h4>
+              <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How it Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#careers">Careers</a></li>
+                <li><a href="#contact">Contact</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h4>Legal</h4>
+              <ul>
+                <li><a href="#privacy">Privacy</a></li>
+                <li><a href="#terms">Terms</a></li>
+                <li><a href="#cookies">Cookies</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 AI Career Navigator. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeAuth()">&times;</span>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="auth-form active">
+          <div class="auth-header">
+            <h2>Welcome Back</h2>
+            <p>Sign in to your account</p>
+          </div>
+          <form id="loginFormElement">
+            <div class="form-group">
+              <label for="loginEmail">Email Address</label>
+              <input type="email" id="loginEmail" name="email" required />
+              <i class="fas fa-envelope input-icon"></i>
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input
+                type="password"
+                id="loginPassword"
+                name="password"
+                required
+              />
+              <i class="fas fa-lock input-icon"></i>
+              <button
+                type="button"
+                class="password-toggle"
+                onclick="togglePassword('loginPassword')"
+              >
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            <div class="form-options">
+              <label class="checkbox-label">
+                <input type="checkbox" name="remember" />
+                <span class="checkmark"></span>
+                Remember me
+              </label>
+              <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+            <button type="submit" class="auth-button">
+              <i class="fas fa-sign-in-alt"></i>
+              Sign In
+            </button>
+          </form>
+          <div class="auth-footer">
+            <p>
+              Don't have an account?
+              <a href="#" onclick="switchAuth('signup')">Sign up</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signupForm" class="auth-form">
+          <div class="auth-header">
+            <h2>Create Account</h2>
+            <p>Join thousands of professionals</p>
+          </div>
+          <form id="signupFormElement">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="signupFirstName">First Name</label>
+                <input
+                  type="text"
+                  id="signupFirstName"
+                  name="firstName"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="signupLastName">Last Name</label>
+                <input
+                  type="text"
+                  id="signupLastName"
+                  name="lastName"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="signupEmail">Email Address</label>
+              <input type="email" id="signupEmail" name="email" required />
+              <i class="fas fa-envelope input-icon"></i>
+            </div>
+            <div class="form-group">
+              <label for="signupPassword">Password</label>
+              <input
+                type="password"
+                id="signupPassword"
+                name="password"
+                required
+              />
+              <i class="fas fa-lock input-icon"></i>
+              <button
+                type="button"
+                class="password-toggle"
+                onclick="togglePassword('signupPassword')"
+              >
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            <div class="form-group">
+              <label for="signupConfirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="signupConfirmPassword"
+                name="confirmPassword"
+                required
+              />
+              <i class="fas fa-lock input-icon"></i>
+            </div>
+            <div class="form-options">
+              <label class="checkbox-label">
+                <input type="checkbox" name="terms" required />
+                <span class="checkmark"></span>
+                I agree to the <a href="#terms">Terms of Service</a>
+              </label>
+            </div>
+            <button type="submit" class="auth-button">
+              <i class="fas fa-user-plus"></i>
+              Create Account
+            </button>
+          </form>
+          <div class="auth-footer">
+            <p>
+              Already have an account?
+              <a href="#" onclick="switchAuth('login')">Sign in</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget" id="chatbotWidget">
+      <div class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
+        <i class="fas fa-comments"></i>
+        <span
+          class="notification-badge"
+          id="chatNotification"
+          style="display: none"
+          >1</span
+        >
+      </div>
+
+      <div
+        class="chatbot-container"
+        id="chatbotContainer"
+        style="display: none"
+      >
+        <div class="chatbot-header">
+          <div class="chatbot-title">
+            <i class="fas fa-robot"></i>
+            <span>AI Career Assistant</span>
+          </div>
+          <div class="chatbot-controls">
+            <button class="minimize-btn" onclick="minimizeChatbot()">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button class="close-btn" onclick="closeChatbot()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="chatbot-messages" id="chatbotMessages">
+          <div class="message bot-message">
+            <div class="message-avatar">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+              <p>
+                👋 Hello! I'm your AI Career Assistant. I can help you with
+                questions about career guidance, resume tips, job
+                recommendations, and more!
+              </p>
+              <div class="quick-actions">
+                <button
+                  class="quick-action"
+                  onclick="sendQuickMessage('What is AI Career Navigator?')"
+                >
+                  About Platform
+                </button>
+                <button
+                  class="quick-action"
+                  onclick="sendQuickMessage('How does the AI work?')"
+                >
+                  How It Works
+                </button>
+                <button
+                  class="quick-action"
+                  onclick="sendQuickMessage('What careers can you recommend?')"
+                >
+                  Career Options
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chatbot-input">
+          <div
+            class="typing-indicator"
+            id="typingIndicator"
+            style="display: none"
+          >
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>AI is typing...</span>
+          </div>
+          <div class="input-container">
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="Ask me anything about your career..."
+              onkeypress="handleChatKeyPress(event)"
+            />
+            <button id="sendBtn" onclick="sendMessage()">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="chatbot-suggestions" id="chatSuggestions">
+          <div class="suggestions-title">Popular Questions:</div>
+          <div class="suggestion-chips">
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('What skills does AI detect?')"
+            >
+              Skill Detection
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('Is my data safe?')"
+            >
+              Data Safety
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('Free learning platforms?')"
+            >
+              Free Courses
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('High paying AI jobs?')"
+            >
+              Salary Info
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chatbot Script -->
+    <script>
+      // Inline chatbot script to avoid file path issues
+      class CareerChatbot {
+        constructor() {
+          this.isOpen = false;
+          this.isMinimized = false;
+          this.messageHistory = [];
+
+          // Initialize knowledge base
+          this.knowledgeBase = {
+            // General Questions
+            "what is ai career navigator": {
+              answer:
+                "AI Career Navigator is an AI-powered tool that guides students and professionals in choosing the right career path based on their skills, interests, and academic background. It provides personalized career recommendations, skill gap analysis, and job matching.",
+              category: "general",
+            },
+            "how does ai career navigator work": {
+              answer:
+                "The system takes your resume and preferences, analyzes your skills using advanced AI algorithms, matches them with current market demand, and recommends the best career paths. It also provides skill development suggestions and job opportunities.",
+              category: "general",
+            },
+            "who can use ai career navigator": {
+              answer:
+                "Students, fresh graduates, and professionals looking to switch careers can all use AI Career Navigator. Whether you're just starting out or looking to advance your career, our platform adapts to your experience level.",
+              category: "general",
+            },
+
+            // Resume & Skills
+            "why upload resume": {
+              answer:
+                "Uploading your resume helps the AI extract your academic background, skills, work experience, and achievements to provide highly personalized career suggestions. The more information we have, the better our recommendations!",
+              category: "resume",
+            },
+            "use without resume": {
+              answer:
+                "Yes, absolutely! You can manually input your skills, interests, educational background, and career preferences instead of uploading a resume. The platform is flexible to accommodate different user preferences.",
+              category: "resume",
+            },
+            "what skills detected": {
+              answer:
+                "The AI detects both technical skills (Python, Java, Data Analysis, Web Development, Machine Learning, etc.) and soft skills (communication, teamwork, leadership, problem-solving, etc.). It can identify over 500+ different skills from various domains.",
+              category: "skills",
+            },
+
+            // Career Suggestions
+            "what careers recommended": {
+              answer:
+                "I can recommend careers like Data Scientist, AI Engineer, Software Developer, Web Developer, Cloud Engineer, Cybersecurity Specialist, Business Analyst, Digital Marketer, UI/UX Designer, Product Manager, DevOps Engineer, and many more across different industries.",
+              category: "careers",
+            },
+            "how ai choose career": {
+              answer:
+                "The AI analyzes your skills, interests, educational background, and career goals, then compares them with industry requirements and job market trends. It uses machine learning algorithms to suggest careers that best match your profile with confidence scores.",
+              category: "careers",
+            },
+            "multiple career options": {
+              answer:
+                "Yes! The AI generates a ranked list of suitable careers along with confidence scores, growth potential, and salary information. You'll typically get 5-10 personalized career recommendations to choose from.",
+              category: "careers",
+            },
+
+            // Education & Courses
+            "suggest courses": {
+              answer:
+                "Yes, the AI recommends online courses, certifications, and training programs based on your chosen career path. It provides specific course recommendations to fill skill gaps and boost your career prospects.",
+              category: "education",
+            },
+            "free learning platforms": {
+              answer:
+                "Absolutely! The AI recommends free platforms like Coursera (audit mode), edX, Khan Academy, freeCodeCamp, YouTube tutorials, GitHub learning resources, and many university open courseware programs.",
+              category: "education",
+            },
+            "degree suggestions": {
+              answer:
+                "Yes, based on your career goals (e.g., Data Science, Cybersecurity, AI), the system suggests relevant degrees, specializations, or alternative learning paths including bootcamps and certification programs.",
+              category: "education",
+            },
+
+            // Job Market
+            "job demand": {
+              answer:
+                "Yes, the AI provides real-time job market trends, showing demand levels, growth projections, and hiring patterns in your chosen field. It helps you understand which careers are currently in high demand.",
+              category: "jobs",
+            },
+            "salary information": {
+              answer:
+                "Yes, the platform provides average salary ranges for different roles based on location, experience level, company size, and industry. This helps you set realistic salary expectations.",
+              category: "jobs",
+            },
+            "future proof careers": {
+              answer:
+                "The AI highlights high-growth, future-proof fields like AI/Machine Learning, Cybersecurity, Cloud Computing, Data Science, Digital Health, Renewable Energy, and emerging technologies that are expected to grow significantly.",
+              category: "jobs",
+            },
+
+            // Personalization
+            "set preferences": {
+              answer:
+                "Yes! You can set preferences such as salary range, work-life balance, job flexibility, industry type, company size, location preferences, and career growth expectations. The AI tailors recommendations accordingly.",
+              category: "personalization",
+            },
+            "internship guidance": {
+              answer:
+                "Yes, the AI suggests relevant internship roles based on your current skills and career goals. It helps you find internships that will provide valuable experience and improve your job prospects.",
+              category: "personalization",
+            },
+            "resume improvement": {
+              answer:
+                "Yes! The AI provides personalized resume-building tips, highlights missing skills compared to your target career, suggests improvements in formatting, and recommends additional experiences to strengthen your profile.",
+              category: "personalization",
+            },
+
+            // Technical Questions
+            "need coding knowledge": {
+              answer:
+                "No coding knowledge required! The platform is designed to be user-friendly. Simply upload your resume or manually input your skills and preferences, and the AI will handle the rest.",
+              category: "technical",
+            },
+            "data safety": {
+              answer:
+                "Yes, your data is completely safe. All information is encrypted using industry-standard security protocols. We never share your personal data with third parties and you can delete your data anytime.",
+              category: "technical",
+            },
+            "mobile access": {
+              answer:
+                "Yes, the AI Career Navigator works seamlessly on both mobile devices and desktop browsers. The interface is fully responsive and optimized for all screen sizes.",
+              category: "technical",
+            },
+
+            // Specific Career Advice
+            "python excel career": {
+              answer:
+                "Based on Python and Excel skills, excellent career options include Data Analyst, Business Analyst, Junior Data Scientist, Financial Analyst, Operations Analyst, or Market Research Analyst. These roles highly value your current skillset!",
+              category: "advice",
+            },
+            "high paying ai jobs": {
+              answer:
+                "For high-paying AI careers, focus on Machine Learning Engineer, AI Research Scientist, Deep Learning Engineer, or AI Product Manager roles. Develop skills in TensorFlow, PyTorch, cloud platforms, and get certifications. Salaries typically range from $120k-$300k+.",
+              category: "advice",
+            },
+            "design technology career": {
+              answer:
+                "Perfect combination! You can explore UI/UX Design, Human-Computer Interaction, Frontend Development, Design Systems Engineering, or Creative Technology roles. These careers blend creativity with technical skills beautifully.",
+              category: "advice",
+            },
+          };
+
+          this.initialize();
+        }
+
+        initialize() {
+          console.log("Chatbot initializing...");
+          // Show notification badge after 3 seconds
+          setTimeout(() => {
+            this.showNotification();
+          }, 3000);
+        }
+
+        showNotification() {
+          const badge = document.getElementById("chatNotification");
+          if (badge) {
+            badge.style.display = "block";
+            console.log("Notification badge shown");
+          }
+        }
+
+        hideNotification() {
+          const badge = document.getElementById("chatNotification");
+          if (badge) {
+            badge.style.display = "none";
+          }
+        }
+
+        findBestMatch(userInput) {
+          const input = userInput.toLowerCase().trim();
+
+          // Direct keyword matching
+          for (const [key, value] of Object.entries(this.knowledgeBase)) {
+            if (input.includes(key) || key.includes(input)) {
+              return value;
+            }
+          }
+
+          // Fuzzy matching for common variations
+          const fuzzyMatches = {
+            "how it works": "how does ai career navigator work",
+            careers: "what careers recommended",
+            jobs: "what careers recommended",
+            salary: "salary information",
+            money: "salary information",
+            safe: "data safety",
+            security: "data safety",
+            mobile: "mobile access",
+            phone: "mobile access",
+            courses: "suggest courses",
+            learn: "suggest courses",
+            study: "suggest courses",
+            free: "free learning platforms",
+            resume: "why upload resume",
+            cv: "why upload resume",
+            skills: "what skills detected",
+            python: "python excel career",
+            design: "design technology career",
+            "ai job": "high paying ai jobs",
+            "machine learning": "high paying ai jobs",
+          };
+
+          for (const [pattern, key] of Object.entries(fuzzyMatches)) {
+            if (input.includes(pattern)) {
+              return this.knowledgeBase[key];
+            }
+          }
+
+          return null;
+        }
+
+        generateResponse(userInput) {
+          const match = this.findBestMatch(userInput);
+
+          if (match) {
+            return {
+              text: match.answer,
+              category: match.category,
+              suggestions: this.getSuggestions(match.category),
+            };
+          } else {
+            return {
+              text: "I understand you're looking for career guidance! While I don't have a specific answer to that question, I can help you with career recommendations, skill analysis, job market insights, and learning paths. Could you try asking about a specific career field or skill?",
+              category: "general",
+              suggestions: [
+                "What careers can you recommend?",
+                "How does the AI work?",
+                "Is my data safe?",
+                "What skills can you detect?",
+              ],
+            };
+          }
+        }
+
+        getSuggestions(category) {
+          const suggestionMap = {
+            general: [
+              "How does the AI work?",
+              "Who can use this platform?",
+              "What careers can you recommend?",
+            ],
+            careers: [
+              "What skills should I learn?",
+              "High paying career options?",
+              "Future-proof careers?",
+            ],
+            skills: [
+              "Free learning platforms?",
+              "Course recommendations?",
+              "Resume improvement tips?",
+            ],
+            jobs: [
+              "Salary information?",
+              "Job market trends?",
+              "Internship opportunities?",
+            ],
+            education: [
+              "Degree suggestions?",
+              "Free courses available?",
+              "Certification programs?",
+            ],
+          };
+
+          return suggestionMap[category] || suggestionMap.general;
+        }
+
+        addMessage(content, isUser = false) {
+          const messagesContainer = document.getElementById("chatbotMessages");
+          const messageDiv = document.createElement("div");
+          messageDiv.className = `message ${
+            isUser ? "user-message" : "bot-message"
+          }`;
+
+          messageDiv.innerHTML = `
+            <div class="message-avatar">
+                <i class="fas fa-${isUser ? "user" : "robot"}"></i>
+            </div>
+            <div class="message-content">
+                <p>${content}</p>
+            </div>
+        `;
+
+          messagesContainer.appendChild(messageDiv);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+          // Store message in history
+          this.messageHistory.push({
+            content,
+            isUser,
+            timestamp: new Date(),
+          });
+        }
+
+        addMessageWithSuggestions(response) {
+          const messagesContainer = document.getElementById("chatbotMessages");
+          const messageDiv = document.createElement("div");
+          messageDiv.className = "message bot-message";
+
+          let suggestionsHTML = "";
+          if (response.suggestions && response.suggestions.length > 0) {
+            suggestionsHTML = `
+                <div class="quick-actions">
+                    ${response.suggestions
+                      .map(
+                        (suggestion) =>
+                          `<button class="quick-action" onclick="sendQuickMessage('${suggestion}')">${suggestion}</button>`
+                      )
+                      .join("")}
+                </div>
+            `;
+          }
+
+          messageDiv.innerHTML = `
+            <div class="message-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+                <p>${response.text}</p>
+                ${suggestionsHTML}
+            </div>
+        `;
+
+          messagesContainer.appendChild(messageDiv);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        showTypingIndicator() {
+          const indicator = document.getElementById("typingIndicator");
+          if (indicator) {
+            indicator.style.display = "flex";
+          }
+        }
+
+        hideTypingIndicator() {
+          const indicator = document.getElementById("typingIndicator");
+          if (indicator) {
+            indicator.style.display = "none";
+          }
+        }
+
+        async processMessage(userInput) {
+          if (!userInput.trim()) return;
+
+          // Add user message
+          this.addMessage(userInput, true);
+
+          // Show typing indicator
+          this.showTypingIndicator();
+
+          // Simulate processing time
+          await new Promise((resolve) =>
+            setTimeout(resolve, 1000 + Math.random() * 1000)
+          );
+
+          // Hide typing indicator
+          this.hideTypingIndicator();
+
+          // Generate and add bot response
+          const response = this.generateResponse(userInput);
+          this.addMessageWithSuggestions(response);
+
+          // Update suggestions
+          this.updateSuggestions(response.suggestions);
+        }
+
+        updateSuggestions(suggestions) {
+          const suggestionsContainer =
+            document.querySelector(".suggestion-chips");
+          if (suggestionsContainer && suggestions) {
+            suggestionsContainer.innerHTML = suggestions
+              .map(
+                (suggestion) =>
+                  `<button class="suggestion-chip" onclick="sendQuickMessage('${suggestion}')">${suggestion}</button>`
+              )
+              .join("");
+          }
+        }
+      }
+
+      // Global chatbot instance
+      let careerChatbot;
+
+      // Initialize chatbot when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM loaded, initializing chatbot...");
+        careerChatbot = new CareerChatbot();
+      });
+
+      // Chatbot control functions
+      function toggleChatbot() {
+        console.log("Toggle chatbot clicked");
+        const container = document.getElementById("chatbotContainer");
+        const widget = document.getElementById("chatbotWidget");
+
+        if (container.style.display === "none") {
+          container.style.display = "block";
+          careerChatbot.isOpen = true;
+          careerChatbot.hideNotification();
+
+          // Focus input
+          setTimeout(() => {
+            const input = document.getElementById("chatInput");
+            if (input) input.focus();
+          }, 100);
+        } else {
+          container.style.display = "none";
+          careerChatbot.isOpen = false;
+        }
+      }
+
+      function minimizeChatbot() {
+        const container = document.getElementById("chatbotContainer");
+        container.style.display = "none";
+        careerChatbot.isOpen = false;
+        careerChatbot.isMinimized = true;
+      }
+
+      function closeChatbot() {
+        const container = document.getElementById("chatbotContainer");
+        container.style.display = "none";
+        careerChatbot.isOpen = false;
+      }
+
+      function sendMessage() {
+        const input = document.getElementById("chatInput");
+        const message = input.value.trim();
+
+        if (message && careerChatbot) {
+          careerChatbot.processMessage(message);
+          input.value = "";
+        }
+      }
+
+      function sendQuickMessage(message) {
+        const input = document.getElementById("chatInput");
+        if (input) {
+          input.value = message;
+          sendMessage();
+        }
+      }
+
+      function handleChatKeyPress(event) {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      }
+    </script>
+
+    <style>
+      /* Chatbot Widget Styles */
+      .chatbot-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 10000;
+        font-family: "Inter", sans-serif;
+      }
+
+      .chatbot-toggle {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        animation: pulse-glow 2s infinite;
+      }
+
+      .chatbot-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      .chatbot-toggle i {
+        font-size: 24px;
+        color: white;
+      }
+
+      .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ef4444;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 600;
+        animation: bounce 1s infinite;
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 30px rgba(99, 102, 241, 0.8);
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-5px);
+        }
+        60% {
+          transform: translateY(-3px);
+        }
+      }
+
+      .chatbot-container {
+        width: 380px;
+        height: 500px;
+        background: #16213e;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        overflow: hidden;
+        backdrop-filter: blur(20px);
+        animation: slideInUp 0.3s ease-out;
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .chatbot-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .chatbot-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .chatbot-title i {
+        font-size: 18px;
+      }
+
+      .chatbot-controls {
+        display: flex;
+        gap: 4px;
+      }
+
+      .minimize-btn,
+      .close-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .minimize-btn:hover,
+      .close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .chatbot-messages {
+        height: 320px;
+        overflow-y: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        scroll-behavior: smooth;
+      }
+
+      .chatbot-messages::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .chatbot-messages::-webkit-scrollbar-track {
+        background: #1e293b;
+        border-radius: 3px;
+      }
+
+      .chatbot-messages::-webkit-scrollbar-thumb {
+        background: #3b82f6;
+        border-radius: 3px;
+      }
+
+      .message {
+        display: flex;
+        gap: 8px;
+        max-width: 85%;
+        animation: messageSlideIn 0.3s ease-out;
+      }
+
+      @keyframes messageSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .user-message {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+      }
+
+      .message-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .bot-message .message-avatar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .user-message .message-avatar {
+        background: #22c55e;
+        color: white;
+      }
+
+      .message-content {
+        background: #1e293b;
+        padding: 16px;
+        border-radius: 12px;
+        flex: 1;
+      }
+
+      .user-message .message-content {
+        background: #3b82f6;
+        color: white;
+        text-align: right;
+      }
+
+      .message-content p {
+        margin: 0;
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .user-message .message-content p {
+        color: white;
+      }
+
+      .quick-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 8px;
+      }
+
+      .quick-action {
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        color: #3b82f6;
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .quick-action:hover {
+        background: #3b82f6;
+        color: white;
+      }
+
+      .typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        color: #94a3b8;
+        font-size: 12px;
+      }
+
+      .typing-dots {
+        display: flex;
+        gap: 2px;
+      }
+
+      .typing-dots span {
+        width: 4px;
+        height: 4px;
+        background: #3b82f6;
+        border-radius: 50%;
+        animation: typing 1.4s infinite ease-in-out;
+      }
+
+      .typing-dots span:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .typing-dots span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dots span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes typing {
+        0%,
+        80%,
+        100% {
+          opacity: 0.3;
+          transform: scale(1);
+        }
+        40% {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+      }
+
+      .chatbot-input {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 16px;
+      }
+
+      .input-container {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .input-container input {
+        flex: 1;
+        background: #1e293b;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 16px;
+        color: #ffffff;
+        font-size: 14px;
+      }
+
+      .input-container input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+      }
+
+      .input-container button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .input-container button:hover {
+        transform: scale(1.1);
+      }
+
+      .chatbot-suggestions {
+        padding: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        max-height: 80px;
+        overflow: hidden;
+      }
+
+      .suggestions-title {
+        color: #94a3b8;
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      .suggestion-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .suggestion-chip {
+        background: #334155;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #cbd5e1;
+        padding: 4px 8px;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .suggestion-chip:hover {
+        background: #3b82f6;
+        color: white;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .chatbot-container {
+          width: 350px;
+          height: 450px;
+        }
+
+        .chatbot-messages {
+          height: 270px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .chatbot-container {
+          width: calc(100vw - 40px);
+          height: 400px;
+          right: -10px;
+        }
+
+        .chatbot-messages {
+          height: 220px;
+        }
+      }
+    </style>
+    <script src="js/main.js"></script>
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget" id="chatbotWidget">
+      <div class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
+        <i class="fas fa-comments"></i>
+        <span
+          class="notification-badge"
+          id="chatNotification"
+          style="display: none"
+          >1</span
+        >
+      </div>
+
+      <div
+        class="chatbot-container"
+        id="chatbotContainer"
+        style="display: none"
+      >
+        <div class="chatbot-header">
+          <div class="chatbot-title">
+            <i class="fas fa-robot"></i>
+            <span>AI Career Assistant</span>
+          </div>
+          <div class="chatbot-controls">
+            <button class="minimize-btn" onclick="minimizeChatbot()">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button class="close-btn" onclick="closeChatbot()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="chatbot-messages" id="chatbotMessages">
+          <div class="message bot-message">
+            <div class="message-avatar">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+              <p>
+                👋 Hello! I'm your AI Career Assistant. I can help you with
+                questions about career guidance, resume tips, job
+                recommendations, and more!
+              </p>
+              <div class="quick-actions">
+                <button
+                  class="quick-action"
+                  onclick="sendQuickMessage('What is AI Career Navigator?')"
+                >
+                  About Platform
+                </button>
+                <button
+                  class="quick-action"
+                  onclick="sendQuickMessage('How does the AI work?')"
+                >
+                  How It Works
+                </button>
+                <button
+                  class="quick-action"
+                  onclick="sendQuickMessage('What careers can you recommend?')"
+                >
+                  Career Options
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chatbot-input">
+          <div
+            class="typing-indicator"
+            id="typingIndicator"
+            style="display: none"
+          >
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>AI is typing...</span>
+          </div>
+          <div class="input-container">
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="Ask me anything about your career..."
+              onkeypress="handleChatKeyPress(event)"
+            />
+            <button id="sendBtn" onclick="sendMessage()">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="chatbot-suggestions" id="chatSuggestions">
+          <div class="suggestions-title">Popular Questions:</div>
+          <div class="suggestion-chips">
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('What skills does AI detect?')"
+            >
+              Skill Detection
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('Is my data safe?')"
+            >
+              Data Safety
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('Free learning platforms?')"
+            >
+              Free Courses
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendQuickMessage('High paying AI jobs?')"
+            >
+              Salary Info
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chatbot Script -->
+    <script>
+      // Inline chatbot script to avoid file path issues
+      class CareerChatbot {
+        constructor() {
+          this.isOpen = false;
+          this.isMinimized = false;
+          this.messageHistory = [];
+
+          // Initialize knowledge base
+          this.knowledgeBase = {
+            // General Questions
+            "what is ai career navigator": {
+              answer:
+                "AI Career Navigator is an AI-powered tool that guides students and professionals in choosing the right career path based on their skills, interests, and academic background. It provides personalized career recommendations, skill gap analysis, and job matching.",
+              category: "general",
+            },
+            "how does ai career navigator work": {
+              answer:
+                "The system takes your resume and preferences, analyzes your skills using advanced AI algorithms, matches them with current market demand, and recommends the best career paths. It also provides skill development suggestions and job opportunities.",
+              category: "general",
+            },
+            "who can use ai career navigator": {
+              answer:
+                "Students, fresh graduates, and professionals looking to switch careers can all use AI Career Navigator. Whether you're just starting out or looking to advance your career, our platform adapts to your experience level.",
+              category: "general",
+            },
+
+            // Resume & Skills
+            "why upload resume": {
+              answer:
+                "Uploading your resume helps the AI extract your academic background, skills, work experience, and achievements to provide highly personalized career suggestions. The more information we have, the better our recommendations!",
+              category: "resume",
+            },
+            "use without resume": {
+              answer:
+                "Yes, absolutely! You can manually input your skills, interests, educational background, and career preferences instead of uploading a resume. The platform is flexible to accommodate different user preferences.",
+              category: "resume",
+            },
+            "what skills detected": {
+              answer:
+                "The AI detects both technical skills (Python, Java, Data Analysis, Web Development, Machine Learning, etc.) and soft skills (communication, teamwork, leadership, problem-solving, etc.). It can identify over 500+ different skills from various domains.",
+              category: "skills",
+            },
+
+            // Career Suggestions
+            "what careers recommended": {
+              answer:
+                "I can recommend careers like Data Scientist, AI Engineer, Software Developer, Web Developer, Cloud Engineer, Cybersecurity Specialist, Business Analyst, Digital Marketer, UI/UX Designer, Product Manager, DevOps Engineer, and many more across different industries.",
+              category: "careers",
+            },
+            "how ai choose career": {
+              answer:
+                "The AI analyzes your skills, interests, educational background, and career goals, then compares them with industry requirements and job market trends. It uses machine learning algorithms to suggest careers that best match your profile with confidence scores.",
+              category: "careers",
+            },
+            "multiple career options": {
+              answer:
+                "Yes! The AI generates a ranked list of suitable careers along with confidence scores, growth potential, and salary information. You'll typically get 5-10 personalized career recommendations to choose from.",
+              category: "careers",
+            },
+
+            // Education & Courses
+            "suggest courses": {
+              answer:
+                "Yes, the AI recommends online courses, certifications, and training programs based on your chosen career path. It provides specific course recommendations to fill skill gaps and boost your career prospects.",
+              category: "education",
+            },
+            "free learning platforms": {
+              answer:
+                "Absolutely! The AI recommends free platforms like Coursera (audit mode), edX, Khan Academy, freeCodeCamp, YouTube tutorials, GitHub learning resources, and many university open courseware programs.",
+              category: "education",
+            },
+            "degree suggestions": {
+              answer:
+                "Yes, based on your career goals (e.g., Data Science, Cybersecurity, AI), the system suggests relevant degrees, specializations, or alternative learning paths including bootcamps and certification programs.",
+              category: "education",
+            },
+
+            // Job Market
+            "job demand": {
+              answer:
+                "Yes, the AI provides real-time job market trends, showing demand levels, growth projections, and hiring patterns in your chosen field. It helps you understand which careers are currently in high demand.",
+              category: "jobs",
+            },
+            "salary information": {
+              answer:
+                "Yes, the platform provides average salary ranges for different roles based on location, experience level, company size, and industry. This helps you set realistic salary expectations.",
+              category: "jobs",
+            },
+            "future proof careers": {
+              answer:
+                "The AI highlights high-growth, future-proof fields like AI/Machine Learning, Cybersecurity, Cloud Computing, Data Science, Digital Health, Renewable Energy, and emerging technologies that are expected to grow significantly.",
+              category: "jobs",
+            },
+
+            // Personalization
+            "set preferences": {
+              answer:
+                "Yes! You can set preferences such as salary range, work-life balance, job flexibility, industry type, company size, location preferences, and career growth expectations. The AI tailors recommendations accordingly.",
+              category: "personalization",
+            },
+            "internship guidance": {
+              answer:
+                "Yes, the AI suggests relevant internship roles based on your current skills and career goals. It helps you find internships that will provide valuable experience and improve your job prospects.",
+              category: "personalization",
+            },
+            "resume improvement": {
+              answer:
+                "Yes! The AI provides personalized resume-building tips, highlights missing skills compared to your target career, suggests improvements in formatting, and recommends additional experiences to strengthen your profile.",
+              category: "personalization",
+            },
+
+            // Technical Questions
+            "need coding knowledge": {
+              answer:
+                "No coding knowledge required! The platform is designed to be user-friendly. Simply upload your resume or manually input your skills and preferences, and the AI will handle the rest.",
+              category: "technical",
+            },
+            "data safety": {
+              answer:
+                "Yes, your data is completely safe. All information is encrypted using industry-standard security protocols. We never share your personal data with third parties and you can delete your data anytime.",
+              category: "technical",
+            },
+            "mobile access": {
+              answer:
+                "Yes, the AI Career Navigator works seamlessly on both mobile devices and desktop browsers. The interface is fully responsive and optimized for all screen sizes.",
+              category: "technical",
+            },
+
+            // Specific Career Advice
+            "python excel career": {
+              answer:
+                "Based on Python and Excel skills, excellent career options include Data Analyst, Business Analyst, Junior Data Scientist, Financial Analyst, Operations Analyst, or Market Research Analyst. These roles highly value your current skillset!",
+              category: "advice",
+            },
+            "high paying ai jobs": {
+              answer:
+                "For high-paying AI careers, focus on Machine Learning Engineer, AI Research Scientist, Deep Learning Engineer, or AI Product Manager roles. Develop skills in TensorFlow, PyTorch, cloud platforms, and get certifications. Salaries typically range from $120k-$300k+.",
+              category: "advice",
+            },
+            "design technology career": {
+              answer:
+                "Perfect combination! You can explore UI/UX Design, Human-Computer Interaction, Frontend Development, Design Systems Engineering, or Creative Technology roles. These careers blend creativity with technical skills beautifully.",
+              category: "advice",
+            },
+          };
+
+          this.initialize();
+        }
+
+        initialize() {
+          console.log("Chatbot initializing...");
+          // Show notification badge after 3 seconds
+          setTimeout(() => {
+            this.showNotification();
+          }, 3000);
+        }
+
+        showNotification() {
+          const badge = document.getElementById("chatNotification");
+          if (badge) {
+            badge.style.display = "block";
+            console.log("Notification badge shown");
+          }
+        }
+
+        hideNotification() {
+          const badge = document.getElementById("chatNotification");
+          if (badge) {
+            badge.style.display = "none";
+          }
+        }
+
+        findBestMatch(userInput) {
+          const input = userInput.toLowerCase().trim();
+
+          // Direct keyword matching
+          for (const [key, value] of Object.entries(this.knowledgeBase)) {
+            if (input.includes(key) || key.includes(input)) {
+              return value;
+            }
+          }
+
+          // Fuzzy matching for common variations
+          const fuzzyMatches = {
+            "how it works": "how does ai career navigator work",
+            careers: "what careers recommended",
+            jobs: "what careers recommended",
+            salary: "salary information",
+            money: "salary information",
+            safe: "data safety",
+            security: "data safety",
+            mobile: "mobile access",
+            phone: "mobile access",
+            courses: "suggest courses",
+            learn: "suggest courses",
+            study: "suggest courses",
+            free: "free learning platforms",
+            resume: "why upload resume",
+            cv: "why upload resume",
+            skills: "what skills detected",
+            python: "python excel career",
+            design: "design technology career",
+            "ai job": "high paying ai jobs",
+            "machine learning": "high paying ai jobs",
+          };
+
+          for (const [pattern, key] of Object.entries(fuzzyMatches)) {
+            if (input.includes(pattern)) {
+              return this.knowledgeBase[key];
+            }
+          }
+
+          return null;
+        }
+
+        generateResponse(userInput) {
+          const match = this.findBestMatch(userInput);
+
+          if (match) {
+            return {
+              text: match.answer,
+              category: match.category,
+              suggestions: this.getSuggestions(match.category),
+            };
+          } else {
+            return {
+              text: "I understand you're looking for career guidance! While I don't have a specific answer to that question, I can help you with career recommendations, skill analysis, job market insights, and learning paths. Could you try asking about a specific career field or skill?",
+              category: "general",
+              suggestions: [
+                "What careers can you recommend?",
+                "How does the AI work?",
+                "Is my data safe?",
+                "What skills can you detect?",
+              ],
+            };
+          }
+        }
+
+        getSuggestions(category) {
+          const suggestionMap = {
+            general: [
+              "How does the AI work?",
+              "Who can use this platform?",
+              "What careers can you recommend?",
+            ],
+            careers: [
+              "What skills should I learn?",
+              "High paying career options?",
+              "Future-proof careers?",
+            ],
+            skills: [
+              "Free learning platforms?",
+              "Course recommendations?",
+              "Resume improvement tips?",
+            ],
+            jobs: [
+              "Salary information?",
+              "Job market trends?",
+              "Internship opportunities?",
+            ],
+            education: [
+              "Degree suggestions?",
+              "Free courses available?",
+              "Certification programs?",
+            ],
+          };
+
+          return suggestionMap[category] || suggestionMap.general;
+        }
+
+        addMessage(content, isUser = false) {
+          const messagesContainer = document.getElementById("chatbotMessages");
+          const messageDiv = document.createElement("div");
+          messageDiv.className = `message ${
+            isUser ? "user-message" : "bot-message"
+          }`;
+
+          messageDiv.innerHTML = `
+            <div class="message-avatar">
+                <i class="fas fa-${isUser ? "user" : "robot"}"></i>
+            </div>
+            <div class="message-content">
+                <p>${content}</p>
+            </div>
+        `;
+
+          messagesContainer.appendChild(messageDiv);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+          // Store message in history
+          this.messageHistory.push({
+            content,
+            isUser,
+            timestamp: new Date(),
+          });
+        }
+
+        addMessageWithSuggestions(response) {
+          const messagesContainer = document.getElementById("chatbotMessages");
+          const messageDiv = document.createElement("div");
+          messageDiv.className = "message bot-message";
+
+          let suggestionsHTML = "";
+          if (response.suggestions && response.suggestions.length > 0) {
+            suggestionsHTML = `
+                <div class="quick-actions">
+                    ${response.suggestions
+                      .map(
+                        (suggestion) =>
+                          `<button class="quick-action" onclick="sendQuickMessage('${suggestion}')">${suggestion}</button>`
+                      )
+                      .join("")}
+                </div>
+            `;
+          }
+
+          messageDiv.innerHTML = `
+            <div class="message-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+                <p>${response.text}</p>
+                ${suggestionsHTML}
+            </div>
+        `;
+
+          messagesContainer.appendChild(messageDiv);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        showTypingIndicator() {
+          const indicator = document.getElementById("typingIndicator");
+          if (indicator) {
+            indicator.style.display = "flex";
+          }
+        }
+
+        hideTypingIndicator() {
+          const indicator = document.getElementById("typingIndicator");
+          if (indicator) {
+            indicator.style.display = "none";
+          }
+        }
+
+        async processMessage(userInput) {
+          if (!userInput.trim()) return;
+
+          // Add user message
+          this.addMessage(userInput, true);
+
+          // Show typing indicator
+          this.showTypingIndicator();
+
+          // Simulate processing time
+          await new Promise((resolve) =>
+            setTimeout(resolve, 1000 + Math.random() * 1000)
+          );
+
+          // Hide typing indicator
+          this.hideTypingIndicator();
+
+          // Generate and add bot response
+          const response = this.generateResponse(userInput);
+          this.addMessageWithSuggestions(response);
+
+          // Update suggestions
+          this.updateSuggestions(response.suggestions);
+        }
+
+        updateSuggestions(suggestions) {
+          const suggestionsContainer =
+            document.querySelector(".suggestion-chips");
+          if (suggestionsContainer && suggestions) {
+            suggestionsContainer.innerHTML = suggestions
+              .map(
+                (suggestion) =>
+                  `<button class="suggestion-chip" onclick="sendQuickMessage('${suggestion}')">${suggestion}</button>`
+              )
+              .join("");
+          }
+        }
+      }
+
+      // Global chatbot instance
+      let careerchatbot;
+
+      // Initialize chatbot when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM loaded, initializing chatbot...");
+        careerChatbot = new CareerChatbot();
+      });
+
+      // Chatbot control functions
+      function toggleChatbot() {
+        console.log("Toggle chatbot clicked");
+        const container = document.getElementById("chatbotContainer");
+        const widget = document.getElementById("chatbotWidget");
+
+        if (container.style.display === "none") {
+          container.style.display = "block";
+          careerChatbot.isOpen = true;
+          careerChatbot.hideNotification();
+
+          // Focus input
+          setTimeout(() => {
+            const input = document.getElementById("chatInput");
+            if (input) input.focus();
+          }, 100);
+        } else {
+          container.style.display = "none";
+          careerChatbot.isOpen = false;
+        }
+      }
+
+      function minimizeChatbot() {
+        const container = document.getElementById("chatbotContainer");
+        container.style.display = "none";
+        careerChatbot.isOpen = false;
+        careerChatbot.isMinimized = true;
+      }
+
+      function closeChatbot() {
+        const container = document.getElementById("chatbotContainer");
+        container.style.display = "none";
+        careerChatbot.isOpen = false;
+      }
+
+      function sendMessage() {
+        const input = document.getElementById("chatInput");
+        const message = input.value.trim();
+
+        if (message && careerChatbot) {
+          careerChatbot.processMessage(message);
+          input.value = "";
+        }
+      }
+
+      function sendQuickMessage(message) {
+        const input = document.getElementById("chatInput");
+        if (input) {
+          input.value = message;
+          sendMessage();
+        }
+      }
+
+      function handleChatKeyPress(event) {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      }
+    </script>
+
+    <style>
+      /* Chatbot Widget Styles */
+      .chatbot-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 10000;
+        font-family: "Inter", sans-serif;
+      }
+
+      .chatbot-toggle {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        animation: pulse-glow 2s infinite;
+      }
+
+      .chatbot-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      .chatbot-toggle i {
+        font-size: 24px;
+        color: white;
+      }
+
+      .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ef4444;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 600;
+        animation: bounce 1s infinite;
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 30px rgba(99, 102, 241, 0.8);
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-5px);
+        }
+        60% {
+          transform: translateY(-3px);
+        }
+      }
+
+      .chatbot-container {
+        width: 380px;
+        height: 500px;
+        background: #16213e;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        overflow: hidden;
+        backdrop-filter: blur(20px);
+        animation: slideInUp 0.3s ease-out;
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .chatbot-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .chatbot-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .chatbot-title i {
+        font-size: 18px;
+      }
+
+      .chatbot-controls {
+        display: flex;
+        gap: 4px;
+      }
+
+      .minimize-btn,
+      .close-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .minimize-btn:hover,
+      .close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .chatbot-messages {
+        height: 320px;
+        overflow-y: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        scroll-behavior: smooth;
+      }
+
+      .chatbot-messages::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .chatbot-messages::-webkit-scrollbar-track {
+        background: #1e293b;
+        border-radius: 3px;
+      }
+
+      .chatbot-messages::-webkit-scrollbar-thumb {
+        background: #3b82f6;
+        border-radius: 3px;
+      }
+
+      .message {
+        display: flex;
+        gap: 8px;
+        max-width: 85%;
+        animation: messageSlideIn 0.3s ease-out;
+      }
+
+      @keyframes messageSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .user-message {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+      }
+
+      .message-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .bot-message .message-avatar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .user-message .message-avatar {
+        background: #22c55e;
+        color: white;
+      }
+
+      .message-content {
+        background: #1e293b;
+        padding: 16px;
+        border-radius: 12px;
+        flex: 1;
+      }
+
+      .user-message .message-content {
+        background: #3b82f6;
+        color: white;
+        text-align: right;
+      }
+
+      .message-content p {
+        margin: 0;
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .user-message .message-content p {
+        color: white;
+      }
+
+      .quick-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 8px;
+      }
+
+      .quick-action {
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        color: #3b82f6;
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .quick-action:hover {
+        background: #3b82f6;
+        color: white;
+      }
+
+      .typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        color: #94a3b8;
+        font-size: 12px;
+      }
+
+      .typing-dots {
+        display: flex;
+        gap: 2px;
+      }
+
+      .typing-dots span {
+        width: 4px;
+        height: 4px;
+        background: #3b82f6;
+        border-radius: 50%;
+        animation: typing 1.4s infinite ease-in-out;
+      }
+
+      .typing-dots span:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .typing-dots span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dots span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes typing {
+        0%,
+        80%,
+        100% {
+          opacity: 0.3;
+          transform: scale(1);
+        }
+        40% {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+      }
+
+      .chatbot-input {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 16px;
+      }
+
+      .input-container {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .input-container input {
+        flex: 1;
+        background: #1e293b;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 16px;
+        color: #ffffff;
+        font-size: 14px;
+      }
+
+      .input-container input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+      }
+
+      .input-container button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .input-container button:hover {
+        transform: scale(1.1);
+      }
+
+      .chatbot-suggestions {
+        padding: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        max-height: 80px;
+        overflow: hidden;
+      }
+
+      .suggestions-title {
+        color: #94a3b8;
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      .suggestion-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .suggestion-chip {
+        background: #334155;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #cbd5e1;
+        padding: 4px 8px;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .suggestion-chip:hover {
+        background: #3b82f6;
+        color: white;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .chatbot-container {
+          width: 350px;
+          height: 450px;
+        }
+
+        .chatbot-messages {
+          height: 270px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .chatbot-container {
+          width: calc(100vw - 40px);
+          height: 400px;
+          right: -10px;
+        }
+
+        .chatbot-messages {
+          height: 220px;
+        }
+      }
+    </style>
+  </body>
+</html>
